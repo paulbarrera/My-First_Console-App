@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\pbarr\\Desktop\\Source\\My-First_Console-App\\My-First_Console-App.csproj": {}
+    "C:\\Users\\pbarr\\Desktop\\Source\\my-first_console-app\\My-First_Console-App.csproj": {}
   },
   "projects": {
-    "C:\\Users\\pbarr\\Desktop\\Source\\My-First_Console-App\\My-First_Console-App.csproj": {
+    "C:\\Users\\pbarr\\Desktop\\Source\\my-first_console-app\\My-First_Console-App.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\pbarr\\Desktop\\Source\\My-First_Console-App\\My-First_Console-App.csproj",
+        "projectUniqueName": "C:\\Users\\pbarr\\Desktop\\Source\\my-first_console-app\\My-First_Console-App.csproj",
         "projectName": "My-First_Console-App",
-        "projectPath": "C:\\Users\\pbarr\\Desktop\\Source\\My-First_Console-App\\My-First_Console-App.csproj",
+        "projectPath": "C:\\Users\\pbarr\\Desktop\\Source\\my-first_console-app\\My-First_Console-App.csproj",
         "packagesPath": "C:\\Users\\pbarr\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\pbarr\\Desktop\\Source\\My-First_Console-App\\obj\\",
+        "outputPath": "C:\\Users\\pbarr\\Desktop\\Source\\my-first_console-app\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\pbarr\\AppData\\Roaming\\NuGet\\NuGet.Config"

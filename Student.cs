@@ -11,5 +11,8 @@ namespace My_First_Console_App
         public DateTimeOffset StartDate { get; set; }
         public string LastClassCompleted { get; set; }
         public DateTimeOffset LastClassCompletedOn { get; set; }
+
+        public string StudentDisplay => $"({StudentId} | {FirstName} | {LastName} | {ClassName})";
+        public string FullName => $"{FirstName} {LastName}";
     }
 }

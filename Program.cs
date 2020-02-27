@@ -1,13 +1,28 @@
-﻿  
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text.Json;
+
 
 namespace My_First_Console_App
 {
     class Program
     {
         static List<Student> studentsList = new List<Student>();
+        static string _studentRepositoryPath = $"{AppDomain.CurrentDomain.BaseDirectory}\\students.json";
+    
+        static void Save()
+        {
+            using (var file = File.CreateText(_studentRepositoryPath))
+            {
+                file.WriteAsync(JsonSerializer.Serialize(studentsList));
+            }
+        }
+
+        static List<Student> Read() {
+            return  JsonSerializer.Deserialize<List<Student>>(File.ReadAllText(_studentRepositoryPath));
+        }
         static void Main(string[] args)
         {
             var inputtingStudent = true;
@@ -18,34 +33,35 @@ namespace My_First_Console_App
             var option = Console.ReadLine();
             
             switch (int.Parse(option))
-        {       
-            case 1:
-            InputStudent();
-            break;
+            {       
+                case 1:
+                InputStudent();
+                break;
 
-            case 2:
-            DisplayStudents();
-            break;
+                case 2:
+                DisplayStudents();
+                break;
 
-            case 3:
-            SearchStudents();
-            break;
+                case 3:
+                SearchStudents();
+                break;
 
-            case 4:
-                inputtingStudent = false;
-            break;
+                case 4:
+                    inputtingStudent = false;
+                break;
+             }
         }
-    }
 }
-            private static void DisplayStudents(IEnumerable<Student> students)
+            private static void DisplayStudents(List<Student> students)
             {
              if (students.Any())
                 {   
                 Console.WriteLine($"Student Id | Name |  Class ");
                 studentsList.ForEach(x =>
+                students.ForEach(x =>
             {
                 Console.WriteLine("No students found.");
-            });
+            }));
         } 
          else
         {
@@ -59,6 +75,7 @@ namespace My_First_Console_App
                 var searchString = Console.ReadLine();
                 var students = studentsList.Where(x => x.FullName.Contains(searchString)).ToList();
                 DisplayStudents(students);
+                DisplayStudents(students.ToList());
             }
             private static void DisplayMenu()
             {
@@ -69,36 +86,47 @@ namespace My_First_Console_App
                 Console.WriteLine("4: Exit");
             }
 
-            static Student InputStudent()
+            static void InputStudent()
             {
-            
-            Console.WriteLine("Enter Student Id");
-            var studentId = Convert.ToInt32(Console.ReadLine());
+                {
+            var student = new Student();
+            while (true) 
+            {
+                Console.WriteLine("Enter Student Id");
+                var studentIdSuccessful = int.TryParse(Console.ReadLine(), out var studentId);
+                if (studentIdSuccessful) 
+                {
+                    student.StudentId = studentId;    
+                    break;
+                }
+            }
             Console.WriteLine("Enter First Name");
-            var studentFirstName = Console.ReadLine();
+            student.FirstName = Console.ReadLine();
             Console.WriteLine("Enter Last Name");
-            var studentLastName = Console.ReadLine();
+            student.LastName = Console.ReadLine();
             Console.WriteLine("Enter Class Name");
-            var className = Console.ReadLine();
+            student.ClassName = Console.ReadLine();
             Console.WriteLine("Enter Last Class Completed");
-            var lastClass = Console.ReadLine();
-            Console.WriteLine("Enter Last Class Completed Date in format MM/dd/YYYY");
-            var lastCompletedOn = DateTimeOffset.Parse(Console.ReadLine());
-            Console.WriteLine("Enter Start Date in format MM/dd/YYYY");
-            var startDate = DateTimeOffset.Parse(Console.ReadLine());
-
-            var studentRecord = new Student();
-            studentRecord.StudentId = studentId;
-            studentRecord.FirstName = studentFirstName;
-            studentRecord.LastName = studentLastName;
-            studentRecord.ClassName = className;
-            studentRecord.StartDate = startDate;
-            studentRecord.LastClassCompleted = lastClass;
-            studentRecord.LastClassCompletedOn = lastCompletedOn;
-            Console.WriteLine($"Student Id | Name |  Class "); ;
-            Console.WriteLine($"{studentRecord.StudentId} | {studentRecord.FirstName} {studentRecord.LastName} | {studentRecord.ClassName} ");
-            Console.ReadKey();    
-            return studentRecord;
-         }
+            student.LastClassCompleted = Console.ReadLine();
+            while (true) {
+                Console.WriteLine("Enter Last Class Completed Date in format MM/dd/YYYY");
+                var lastCompletedOnSuccessful = DateTimeOffset.TryParse(Console.ReadLine(), out var lastClassCompletedOn);
+                if (lastCompletedOnSuccessful) {
+                    student.LastClassCompletedOn = lastClassCompletedOn;
+                    break;
+                }
+            } 
+            while (true) {
+                Console.WriteLine("Enter Start Date in format MM/dd/YYYY");
+                var startDateSuccessful = DateTimeOffset.TryParse(Console.ReadLine(), out var startDate);
+                if (startDateSuccessful) {
+                    student.StartDate = startDate;
+                    break;
+                }
+            } 
+            studentsList.Add(student);
+            Save();
+        }
     }
+}
 }
